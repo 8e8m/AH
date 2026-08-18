@@ -9,17 +9,19 @@
 #define SUFFIX "AH"
 
 int main(void)
-{ int d, m, y;
+{ int d, m, y, hh, mm, ss;
 
   { struct tm * now;
-
     { time_t t = time(NULL);
-      now      = localtime(&t);
+      now      = gmtime(&t);
     }
 
     y   = now->tm_year + 1900 - EPOCH_Y;
     m   = now->tm_mon  + 1;
     d   = now->tm_mday;
+    hh  = now->tm_hour;
+    mm  = now->tm_min;
+    ss  = now->tm_sec;
   }
 
   if ( m < EPOCH_M
@@ -27,5 +29,5 @@ int main(void)
   { y--;
   }
 
-  printf("%d%s%s %02d/%02d\n", y, SUFFIX[0] != 0 ? " " : "", SUFFIX, m, d);
+  printf("%d%s%s %02d/%02d %02d:%02d:%02d\n", y, SUFFIX[0] != 0 ? " " : "", SUFFIX, m, d, hh, mm, ss);
 }
